@@ -6,7 +6,7 @@ import { games } from "@/lib/games";
 
 export function Sidebar() {
     return (
-        <aside>
+        <aside className="bg-zinc-800">
             <p>
                 サイドバー
             </p>
