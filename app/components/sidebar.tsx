@@ -7,7 +7,8 @@ import { games } from "@/lib/games";
 export function Sidebar() {
     return (
         <aside className="w-48 bg-zinc-800">
-            <nav>
+            <nav className="flex flex-col">
+                <Link href="/">トップページ</Link>
                 {games.map((game) => (
                     <Link key={game.href} href={game.href}>
                         {game.name}
