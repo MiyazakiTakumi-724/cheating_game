@@ -1,8 +1,8 @@
 "use client";
 
-import { Children, useState } from "react";
+import { useState } from "react";
 
-export default function Home({ children }: { children: React.ReactNode }) {
+export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <main>
@@ -13,8 +13,7 @@ export default function Home({ children }: { children: React.ReactNode }) {
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center"
           onClick={() => setIsOpen(false)}>
-          <div className="bg-white p-6 roounded">
-            {children}
+          <div className="bg-white p-6 rounded">
             <p>説明</p>
           </div>
         </div>
