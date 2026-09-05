@@ -1,8 +1,25 @@
-export default function Home() {
+"use client";
+
+import { Children, useState } from "react";
+
+export default function Home({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <main>
       <h1>いかさまゲーム</h1>
-      <button>遊び方</button>
+      <button onClick={() => setIsOpen(true)}>
+        遊び方
+      </button>
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center"
+          onClick={() => setIsOpen(false)}>
+          <div className="bg-white p-6 roounded">
+            {children}
+            <p>説明</p>
+          </div>
+        </div>
+      )
+      }
     </main>
   )
 }
