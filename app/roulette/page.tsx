@@ -1,8 +1,10 @@
+import { RouletteWheel } from "@/app/components/RouletteWheel";
+
 export default function RoulettePage() {
     return (
         <div>
-            ルーレット(制作中)
+            <h1>いかさまルーレット</h1>
+            <RouletteWheel items={["A", "B", "C", "D", "E"]} />
         </div>
-    )
-
+    );
 }
