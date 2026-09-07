@@ -6,6 +6,16 @@ import { RouletteWheel } from "@/app/components/RouletteWheel";
 export default function RoulettePage() {
     const [items, setItems] = useState(["", ""]);
 
+    const handleAdd = () => {
+        if (items.length >= 8) return;
+        setItems([...items, ""]);
+    }
+
+    const handleDelete = () => {
+        if (items.length <= 2) return;
+        setItems(items.slice(0, -1));
+    }
+
     const handleChange = (index: number, value: string) => {
         const next = [...items];
         next[index] = value;
@@ -26,6 +36,14 @@ export default function RoulettePage() {
                             className="border p-2"
                         />
                     ))}
+                    <div className="flex gap-4">
+                        <button onClick={handleAdd}>
+                            + 追加
+                        </button>
+                        <button onClick={handleDelete}>
+                            - 削除
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
