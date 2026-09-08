@@ -2,7 +2,13 @@ import { sliceAngle, sliceCenterAngle } from "@/lib/roulette";
 
 const COLORS = ["#f87171", "#60a5fa", "#facc15", "#4ade80", "#c084fc", "#fb923c"];
 
-export function RouletteWheel({ items }: { items: string[] }) {
+export function RouletteWheel({
+    items,
+    rotation,
+}: {
+    items: string[];
+    rotation: number;
+}) {
     const angle = sliceAngle(items.length);
 
     const stops = items
@@ -12,7 +18,11 @@ export function RouletteWheel({ items }: { items: string[] }) {
     return (
         <div
             className="relative w-64 h-64 rounded-full"
-            style={{ background: `conic-gradient(${stops})` }}
+            style={{
+                background: `conic-gradient(${stops})`,
+                transform: `rotate(${rotation}deg)`,
+                transition: "transform 4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+            }}
         >
             {items.map((item, i) => (
                 <div
