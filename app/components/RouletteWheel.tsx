@@ -17,7 +17,7 @@ export function RouletteWheel({
 
     return (
         <div
-            className="relative w-64 h-64 rounded-full"
+            className="relative w-64 h-64 rounded-full border-4 border-zinc-700 shadow-2xl"
             style={{
                 background: `conic-gradient(${stops})`,
                 transform: `rotate(${rotation}deg)`,
@@ -27,7 +27,7 @@ export function RouletteWheel({
             {items.map((item, i) => (
                 <div
                     key={i}
-                    className="absolute left-1/2 top-1/2"
+                    className="absolute left-1/2 top-1/2 text-sm font-bold text-zinc-900"
                     style={{
                         transform: `rotate(${sliceCenterAngle(i, items.length)}deg) translateY(-80px)`,
                     }}
