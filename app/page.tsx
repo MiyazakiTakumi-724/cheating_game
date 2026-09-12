@@ -15,7 +15,7 @@ export default function Home() {
         遊び方
       </button>
       {isOpen && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4"
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 md:pl-48"
           onClick={() => setIsOpen(false)}>
           <div className="max-w-sm rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-xl">
             <h2 className="font-bold mb-2">遊び方</h2>
