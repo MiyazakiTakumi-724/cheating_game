@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# からくり箱 (cheating-game)
 
-## Getting Started
+友達を驚かせるための「イカサマ系ミニゲーム」集。
+見た目は普通の運試しゲームだが、結果を事前に仕込める。
 
-First, run the development server:
+対面プレイ前提(同じ端末を囲んで遊ぶ)。React / TypeScript / Next.js の学習も兼ねた個人開発。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 技術構成
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 16 (App Router) / TypeScript / Tailwind CSS v4
+- パッケージ管理: pnpm
+- バックエンド・DBなし。全ロジックはブラウザ内で完結する
+- ホスティング未定(Render の Web Service を想定)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ディレクトリ
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| パス | 役割 |
+|---|---|
+| `app/layout.tsx` | 全ページ共通レイアウト(サイドバーを常時表示) |
+| `app/page.tsx` | トップページ(「遊び方」ボタンとオーバーレイの枠のみ) |
+| `app/roulette/page.tsx` | イカサマルーレット |
+| `app/janken/page.tsx` | じゃんけん(スタブ) |
+| `app/amida/page.tsx` | あみだくじ(スタブ) |
+| `app/components/` | 使い回すコンポーネント(`sidebar` / `RouletteWheel`) |
+| `lib/games.ts` | サイドバーに並ぶゲーム一覧(ここに1行足すとリンクが増える) |
+| `lib/roulette.ts` | ルーレットの角度計算(UIから分離した純粋関数) |
 
-## Learn More
+### 設計方針
 
-To learn more about Next.js, take a look at the following resources:
+- 判定・角度計算などのロジックは `lib/` の純粋関数として書き、UIから分離する(後でテストしやすくするため)
+- ゲームを増やすときは `app/<name>/page.tsx` を作り、`lib/games.ts` に1行追加するだけで済むようにする
+- `layout.tsx` は `metadata` を持つため Server Component のまま。`usePathname` を使う `sidebar` だけ別ファイルの Client Component に分けている
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ミニゲーム一覧
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| ゲーム | 状態 | 仕掛けの概要 |
+|---|---|---|
+| イカサマルーレット | 完成 | 秘密パネルで選んだ番号に、演出上は自然に止まる |
+| イカサマじゃんけん | スタブ(「制作中」表示のみ) | 相手の手を見てから、勝てる手をこっそり選ぶ |
+| イカサマあみだくじ | スタブ(「制作中」表示のみ) | 線は本物のランダム。結果ラベルの配置だけ仕込む |
 
-## Deploy on Vercel
+## イカサマルーレットの仕様
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 操作
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 右側の入力欄に選択肢を入れる(**2〜8個**。`+ 追加` / `- 削除` で増減、削除は末尾から)
+- 下部の「回す」で5周ぶん回転し、4秒かけて減速停止する
+- 円盤の真上の `▼` が指したマスが結果
+
+### 仕掛けの操作方法
+
+| 開き方 | 操作 |
+|---|---|
+| ページタイトル「いかさまルーレット」をダブルクリック | 当てたい番号を選ぶ。「ランダム」で解除 |
+
+- 仕込み中は、秘密パネル内で該当項目が**太字**になる
+- 選択肢を削除して仕込んだ番号が範囲外になった場合、自動で解除される
+- 友達に端末を渡すときは「ランダム」に戻しておく
+- 仕込みがない状態では本当にランダムに動く(疑われたときの実演に使える)

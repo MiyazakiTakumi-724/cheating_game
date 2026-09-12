@@ -38,7 +38,9 @@ export default function RoulettePage() {
     return (
         <div>
             <div className="relative inline-block">
-                <h1 onClick={() => setIsOpen(true)}>いかさまルーレット</h1>
+                <h1 onDoubleClick={() => setIsOpen(!isOpen)} className="select-none">
+                    いかさまルーレット
+                </h1>
                 {isOpen && (
                     <div className="absolute left-0 top-full z-20 flex flex-col gap-1 border bg-white p-2 text-sm">
                         <button
