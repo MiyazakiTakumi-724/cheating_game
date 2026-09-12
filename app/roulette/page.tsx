@@ -7,6 +7,7 @@ import { computeRotation } from "@/lib/roulette";
 export default function RoulettePage() {
     const [items, setItems] = useState(["", ""]);
     const [rotation, setRotation] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleAdd = () => {
         if (items.length >= 8) return;
@@ -31,7 +32,8 @@ export default function RoulettePage() {
 
     return (
         <div>
-            <h1>いかさまルーレット</h1>
+            <h1 onClick={() => setIsOpen(true)}>いかさまルーレット</h1>
+            {isOpen && (<div></div>)}
             <div className="flex gap-8">
                 <div className="relative">
                     <div className="absolute left-1/2 -top-2 -translate-x-1/2 text-2xl z-10">
@@ -41,12 +43,14 @@ export default function RoulettePage() {
                 </div>
                 <div className="flex flex-col gap-2">
                     {items.map((item, index) => (
-                        <input
-                            key={index}
-                            value={item}
-                            onChange={(e) => handleChange(index, e.target.value)}
-                            className="border p-2"
-                        />
+                        <div key={index} className="flex items-center gap-2">
+                            <span className="w-5 text-right">{index + 1}</span>
+                            <input
+                                value={item}
+                                onChange={(e) => handleChange(index, e.target.value)}
+                                className="border p-2"
+                            />
+                        </div>
                     ))}
                     <div className="flex gap-4">
                         <button onClick={handleAdd}>
